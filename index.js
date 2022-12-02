@@ -8,6 +8,21 @@ gotCanvas.height = document.documentElement.clientHeight;
 //document.body.style.overflow = "hidden";
 let ctx = gotCanvas.getContext("2d");
 
+
+var f = new FontFace('Font name', 'url(VeraCrouz.ttf)');
+
+f.load().then(function(font) {
+
+  console.log(`font ${font.family} ready`);
+
+  document.fonts.add(font);
+
+  ctx.fillStyle = "black";
+  CreateText("Disney",  (gotCanvas.width / 2) - 80, 60, "60px Font name");
+  CreateText("Featured Work", (gotCanvas.width / 2) - 184, (gotCanvas.height - 150), "bold 80px Font name");
+});
+
+
 function CreateStripes(count, X, Y, Y2, len, dist, lineW, lineCapStyle){
     ctx.beginPath();
     let i = 0;
@@ -28,18 +43,19 @@ function CreateStripes(count, X, Y, Y2, len, dist, lineW, lineCapStyle){
 }
 function CreateCenterEll(count, X, Y, width, height, dist, ...photo){
     let i = 0;
+    let x1 = [60, 50, 200, 700]
     while(i < count){
         if(i + 1 == count){
-            CreateImageEllCenter(`cartoons/${photo[i]}`, 60, 30, 200, 600, X + dist * i, Y, width, height);
+            CreateImageEllCenter(`cartoons/${photo[i]}`, ...x1 , X + dist * i, Y, width, height);
         }
         else if(i % 2 == 0){
-            CreateImageEllCenter(`cartoons/${photo[i]}`, 60, 30, 200, 600, X + dist * i, Y + 40, width, height);
+            CreateImageEllCenter(`cartoons/${photo[i]}`, ...x1 , X + dist * i, Y + 40, width, height);
         }
         else if(i % 3 == 0){
-            CreateImageEllCenter(`cartoons/${photo[i]}`, 60, 30, 200, 600, X + dist * i, Y + 80, width, height);
+            CreateImageEllCenter(`cartoons/${photo[i]}`, ...x1 , X + dist * i, Y + 80, width, height);
         }
         else{
-            CreateImageEllCenter(`cartoons/${photo[i]}`, 60, 30, 200, 600, X + dist * i, Y, width, height);
+            CreateImageEllCenter(`cartoons/${photo[i]}`, ...x1 , X + dist * i, Y, width, height);
         }
         i++;
     }
@@ -72,10 +88,8 @@ function CreateText(text, x, y, style = "16px monospace"){
 }
 
 ctx.fillStyle = "black";
-CreateText("Disney",  (gotCanvas.width / 2) - 80, 60, "45px monospace");
 CreateText("SEE ALL WORKS", 120, (gotCanvas.height - 43), "15px monospace");
 CreateText("Explore some of Alan's featured work", (gotCanvas.width / 2) - 140, (gotCanvas.height - 115), "14px monospace");
-CreateText("Featured Work", (gotCanvas.width / 2) - 155, (gotCanvas.height - 150), "45px monospace");
 CreateStripes(3, 57, 40, 3, 23, 7, 3, "round");
 CreateImageEll("call.svg", 47, 40, 20, 25);
 CreateImageEll("dinamic.svg", 47, (gotCanvas.height - 57), 20, 20 );
